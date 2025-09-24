@@ -71,7 +71,7 @@ export function Footer() {
             <div className="space-y-3 text-sm">
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                <span>support@yourdomain.com</span>
+                <span>support@career-compas1.com</span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4" />
@@ -88,7 +88,7 @@ export function Footer() {
                   target="_blank" 
                   rel="noopener noreferrer"
                 >
-                  www.yourdomain.com
+                  www.career-compas1.com
                 </a>
               </div>
             </div>
@@ -101,7 +101,7 @@ export function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <p>&copy; 2024 CareerCompass. All rights reserved. | Visit us at yourdomain.com</p>
+          <p>&copy; 2024 CareerCompass. All rights reserved. | Visit us at career-compas1.com</p>
         </motion.div>
       </div>
     </footer>
