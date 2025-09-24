@@ -75,7 +75,7 @@ export function Footer() {
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <Phone className="h-4 w-4" />
-                <span>+91-XXX-XXX-XXXX</span>
+                <span>+91-9993XXXXX</span>
               </div>
               <div className="flex items-center space-x-2 text-muted-foreground">
                 <MapPin className="h-4 w-4" />
@@ -83,7 +83,7 @@ export function Footer() {
               </div>
               <div className="mt-4">
                 <a 
-                  href="https://yourdomain.com" 
+                  href="https://career-compas1.netlify.app/" 
                   className="text-primary hover:underline"
                   target="_blank" 
                   rel="noopener noreferrer"
