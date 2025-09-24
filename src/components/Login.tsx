@@ -79,10 +79,10 @@ export function Login({ onLogin, onSignUp }: LoginProps) {
     setTimeout(() => {
       // Simulate different Google users for demo purposes
       const demoUsers = [
-        { name: 'Priya Sharma', email: 'priya.sharma@gmail.com' },
-        { name: 'Rahul Kumar', email: 'rahul.kumar@gmail.com' },
-        { name: 'Ananya Patel', email: 'ananya.patel@gmail.com' },
-        { name: 'Arjun Singh', email: 'arjun.singh@gmail.com' }
+        { name: 'Sujeet Kumar', email: 'sujeet.fz1425@gmail.com' },
+        { name: 'Siya Saxena', email: 'siya.saxena@gmail.com' },
+        { name: 'Siddhartha Singh', email: 'aayushthakurr7@gmail.com' },
+        { name: 'susheel Prajapati', email: 'sushee.P@gmail.com' }
       ];
       
       const randomUser = demoUsers[Math.floor(Math.random() * demoUsers.length)];
