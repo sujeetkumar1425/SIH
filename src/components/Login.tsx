@@ -81,7 +81,7 @@ export function Login({ onLogin, onSignUp }: LoginProps) {
       const demoUsers = [
         { name: 'Sujeet Kumar', email: 'sujeet.fz1425@gmail.com' },
         { name: 'Siya Saxena', email: 'siya.saxena@gmail.com' },
-        { name: 'Siddhartha Singh', email: 'aayushthakurr7@gmail.com' },
+        { name: 'siya Saxena', email: 'siya.saxena@gmail.com' },
         { name: 'susheel Prajapati', email: 'sushee.P@gmail.com' }
       ];
       
