@@ -3,13 +3,13 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, Send, RotateCcw, User, Bot, BookOpen, Sparkles, Target, Brain, Star } from 'lucide-react';
 
 const StreamSelectionChatbot = () => {
-  const [messages, setMessages] = useState([]);
-  const [currentInput, setCurrentInput] = useState('');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [userResponses, setUserResponses] = useState({});
-  const [isTyping, setIsTyping] = useState(false);
-  const [chatPhase, setChatPhase] = useState('greeting');
-  const messagesEndRef = useRef(null);
+  const [messages, setMessages] = useState<any[]>([]);
+  const [currentInput, setCurrentInput] = useState<string>('');
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [userResponses, setUserResponses] = useState<Record<string, string>>({});
+  const [isTyping, setIsTyping] = useState<boolean>(false);
+  const [chatPhase, setChatPhase] = useState<string>('greeting');
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const questions = [
     {
@@ -60,12 +60,6 @@ const StreamSelectionChatbot = () => {
       category: 'Location Preferences',
       icon: '🌍'
     },
-    /*{
-      id: 'course_duration',
-      question: "How long are you willing to study? (e.g., 3 years for Bachelor's, 4-5 years for professional courses, etc.)",
-      category: 'Time Commitment',
-      icon: '⏰'
-    },*/
     {
       id: 'family_expectations',
       question: "What are your family's expectations regarding your career choice? Are they supportive of your interests?",
@@ -78,30 +72,6 @@ const StreamSelectionChatbot = () => {
       category: 'Priority Assessment',
       icon: '⚖️'
     },
-    /*{
-      id: 'extracurricular',
-      question: "What extracurricular activities or hobbies do you enjoy? Any achievements in sports, arts, or other areas?",
-      category: 'Additional Interests',
-      icon: '🎨'
-    },
-    {
-      id: 'role_models',
-      question: "Do you have any career role models or professionals you admire? What attracts you to their career path?",
-      category: 'Inspiration',
-      icon: '⭐'
-    },
-    {
-      id: 'technology_comfort',
-      question: "How comfortable are you with technology and digital tools? Are you interested in tech-related careers?",
-      category: 'Technical Aptitude',
-      icon: '💻'
-    },
-    {
-      id: 'social_impact',
-      question: "How important is it for you to have a career that creates social impact or helps others?",
-      category: 'Values Assessment',
-      icon: '🤝'
-    },*/
     {
       id: 'entrepreneurship',
       question: "Are you interested in entrepreneurship or starting your own business in the future?",
@@ -110,7 +80,7 @@ const StreamSelectionChatbot = () => {
     }
   ];
 
-  const streamRecommendations = {
+  const streamRecommendations: Record<string, any> = {
     engineering: {
       name: "Engineering & Technology",
       description: "Ideal for students with strong analytical skills and interest in problem-solving",
@@ -175,7 +145,7 @@ const StreamSelectionChatbot = () => {
       const greeting = {
         id: Date.now(),
         sender: 'bot',
-        text: "Hi there! ✨ I'm your AI Stream Selection Guide from CareerCompass, powered by advanced career counseling algorithms. I'm here to help you discover the perfect academic path after your +2!\n\nI'll ask you some thoughtful questions about your interests, goals, and preferences to provide data-driven, personalized recommendations. Ready to unlock your potential? 🚀",
+        text: "Hi there! ✨ I'm your AI Stream Selection Guide from CareerCompass, powered by advanced career counseling algorithms. I'm here to help you discover the perfect academic path after your 12th grade. To get started, tell me a little about yourself.",
         timestamp: new Date().toLocaleTimeString(),
         isWelcome: true
       };
@@ -183,7 +153,7 @@ const StreamSelectionChatbot = () => {
     }, 500);
   }, []);
 
-  const addMessage = (sender, text, delay = 0, isRecommendation = false) => {
+  const addMessage = (sender: string, text: string, delay = 0, isRecommendation = false) => {
     setTimeout(() => {
       const newMessage = {
         id: Date.now() + Math.random(),
@@ -205,55 +175,55 @@ const StreamSelectionChatbot = () => {
   const analyzeResponses = () => {
     const responses = userResponses;
     let recommendations = [];
-    let score = { engineering: 0, medical: 0, commerce: 0, arts: 0, law: 0, design: 0 };
+    let score: Record<string, number> = { engineering: 0, medical: 0, commerce: 0, arts: 0, law: 0, design: 0 };
 
     // Enhanced analysis algorithm
-    if (responses.subject_preference?.toLowerCase().includes('physics') || 
+    if (responses.subject_preference?.toLowerCase().includes('physics') ||
         responses.subject_preference?.toLowerCase().includes('mathematics')) {
       score.engineering += 2;
     }
-    
-    if (responses.subject_preference?.toLowerCase().includes('biology') || 
+
+    if (responses.subject_preference?.toLowerCase().includes('biology') ||
         responses.subject_preference?.toLowerCase().includes('chemistry')) {
       score.medical += 2;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('engineering') || 
+    if (responses.career_interest?.toLowerCase().includes('engineering') ||
         responses.career_interest?.toLowerCase().includes('technology')) {
       score.engineering += 3;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('medicine') || 
+    if (responses.career_interest?.toLowerCase().includes('medicine') ||
         responses.career_interest?.toLowerCase().includes('doctor')) {
       score.medical += 3;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('business') || 
+    if (responses.career_interest?.toLowerCase().includes('business') ||
         responses.career_interest?.toLowerCase().includes('finance')) {
       score.commerce += 3;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('arts') || 
+    if (responses.career_interest?.toLowerCase().includes('arts') ||
         responses.career_interest?.toLowerCase().includes('literature')) {
       score.arts += 3;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('law') || 
+    if (responses.career_interest?.toLowerCase().includes('law') ||
         responses.career_interest?.toLowerCase().includes('legal')) {
       score.law += 3;
     }
 
-    if (responses.career_interest?.toLowerCase().includes('design') || 
+    if (responses.career_interest?.toLowerCase().includes('design') ||
         responses.career_interest?.toLowerCase().includes('creative')) {
       score.design += 3;
     }
 
-    if (responses.technology_comfort?.toLowerCase().includes('comfortable') || 
+    if (responses.technology_comfort?.toLowerCase().includes('comfortable') ||
         responses.technology_comfort?.toLowerCase().includes('yes')) {
       score.engineering += 1;
     }
 
-    if (responses.social_impact?.toLowerCase().includes('important') || 
+    if (responses.social_impact?.toLowerCase().includes('important') ||
         responses.social_impact?.toLowerCase().includes('very')) {
       score.medical += 1;
       score.arts += 1;
@@ -262,7 +232,7 @@ const StreamSelectionChatbot = () => {
 
     // Sort streams by score
     const sortedStreams = Object.entries(score)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 3);
 
     return sortedStreams.map(([stream]) => streamRecommendations[stream]);
@@ -301,22 +271,22 @@ const StreamSelectionChatbot = () => {
       } else {
         setChatPhase('analysis');
         const typingDelay = simulateTyping(2000);
-        addMessage('bot', "🧠 **Analyzing Your Responses...**\n\nI'm processing your answers through advanced career matching algorithms to find your perfect academic fit! This will just take a moment... ✨", typingDelay);
-        
+        addMessage('bot', "🧠 **Analyzing Your Responses...**\n\nI'm processing your answers through advanced career matching algorithms to find your perfect academic fit! This will just take a moment...", typingDelay);
+
         setTimeout(() => {
           const recommendations = analyzeResponses();
           setChatPhase('complete');
-          
+
           let recommendationText = "🎊 **Your Personalized Stream Recommendations Are Ready!**\n\nBased on our comprehensive analysis, here are your top matches:\n\n";
-          
-          recommendations.forEach((stream, index) => {
+
+          recommendations.forEach((stream: any, index: number) => {
             if (stream) {
               const matchPercentage = Math.floor(Math.random() * 15) + 85; // 85-100%
               recommendationText += `**${index + 1}. ${stream.icon} ${stream.name}** (${matchPercentage}% Match)\n`;
               recommendationText += `${stream.description}\n\n`;
               recommendationText += `📚 **Top Courses:** ${stream.courses.slice(0, 3).join(', ')}\n`;
               recommendationText += `📝 **Key Entrance Exams:** ${stream.entrance_exams.join(', ')}\n\n`;
-              recommendationText += "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+              recommendationText += "────────────────────────────────────────────────────────\n\n";
             }
           });
 
@@ -335,13 +305,14 @@ const StreamSelectionChatbot = () => {
       }
     } else {
       const typingDelay = simulateTyping(1500);
-      addMessage('bot', "I'm here to help with any follow-up questions! 🤝 Feel free to ask about:\n\n🔹 Specific course details\n🔹 Entrance exam preparation tips\n🔹 Career prospects and salary expectations\n🔹 College recommendations\n🔹 Alternative career paths\n\nWhat would you like to know more about?", typingDelay);
+      addMessage('bot', "I'm here to help with any follow-up questions! 🤝 Feel free to ask about:\n\n🔹 Specific course details\n🔹 Entrance exam preparation tips\n🔹 Career prospects and salary expectations\n🔹 Scholarship and financial aid options", typingDelay);
     }
 
     setCurrentInput('');
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // Enter to send, Shift+Enter for newline
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -355,12 +326,12 @@ const StreamSelectionChatbot = () => {
     setUserResponses({});
     setChatPhase('greeting');
     setIsTyping(false);
-    
+
     setTimeout(() => {
       const greeting = {
         id: Date.now(),
         sender: 'bot',
-        text: "Hi there! ✨ I'm your AI Stream Selection Guide from CareerCompass, powered by advanced career counseling algorithms. I'm here to help you discover the perfect academic path after your +2!\n\nI'll ask you some thoughtful questions about your interests, goals, and preferences to provide data-driven, personalized recommendations. Ready to unlock your potential? 🚀",
+        text: "Hi there! ✨ I'm your AI Stream Selection Guide from CareerCompass, powered by advanced career counseling algorithms. I'm here to help you discover the perfect academic path after your 12th grade. To get started, tell me a little about yourself.",
         timestamp: new Date().toLocaleTimeString(),
         isWelcome: true
       };
@@ -373,29 +344,29 @@ const StreamSelectionChatbot = () => {
       <div className="max-w-5xl mx-auto">
         {/* Floating particles background */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <motion.div 
+          <motion.div
             className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full opacity-20"
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           />
-          <motion.div 
+          <motion.div
             className="absolute top-1/3 right-1/4 w-1 h-1 bg-purple-400 rounded-full opacity-30"
             animate={{ scale: [1, 1.5, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-1/4 left-1/3 w-3 h-3 bg-pink-400 rounded-full opacity-15"
             animate={{ y: [0, -30, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
-          <motion.div 
+          <motion.div
             className="absolute bottom-1/3 right-1/3 w-1.5 h-1.5 bg-cyan-400 rounded-full opacity-25"
             animate={{ scale: [1, 2, 1] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           />
         </div>
 
-        <motion.div 
+        <motion.div
           className="bg-card/70 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-border/20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -406,7 +377,7 @@ const StreamSelectionChatbot = () => {
             <div className="absolute inset-0 bg-black/10"></div>
             <div className="relative flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <motion.div 
+                <motion.div
                   className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -436,10 +407,10 @@ const StreamSelectionChatbot = () => {
                 <RotateCcw className="w-6 h-6" />
               </motion.button>
             </div>
-            
+
             <AnimatePresence>
               {chatPhase === 'questions' && (
-                <motion.div 
+                <motion.div
                   className="mt-6 relative"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
@@ -453,7 +424,7 @@ const StreamSelectionChatbot = () => {
                     </span>
                   </div>
                   <div className="bg-white/20 rounded-full h-3 backdrop-blur-sm">
-                    <motion.div 
+                    <motion.div
                       className="bg-gradient-to-r from-yellow-400 to-orange-400 h-3 rounded-full shadow-lg"
                       initial={{ width: 0 }}
                       animate={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
@@ -470,7 +441,7 @@ const StreamSelectionChatbot = () => {
               )}
 
               {chatPhase === 'analysis' && (
-                <motion.div 
+                <motion.div
                   className="mt-6"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -486,7 +457,7 @@ const StreamSelectionChatbot = () => {
                     <span className="text-lg font-semibold">Analyzing your responses...</span>
                   </div>
                   <div className="mt-3 bg-white/20 rounded-full h-2 backdrop-blur-sm overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       className="bg-gradient-to-r from-yellow-400 to-orange-400 h-2 rounded-full"
                       animate={{ x: ['-100%', '100%'] }}
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
@@ -511,10 +482,10 @@ const StreamSelectionChatbot = () => {
                     transition={{ duration: 0.3, delay: index * 0.1 }}
                   >
                     <div className={`flex gap-4 max-w-4xl ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                      <motion.div 
+                      <motion.div
                         className={`w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg ${
-                          message.sender === 'user' 
-                            ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white' 
+                          message.sender === 'user'
+                            ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white'
                             : 'bg-gradient-to-br from-purple-500 to-pink-500 text-white'
                         }`}
                         whileHover={{ scale: 1.05 }}
@@ -526,7 +497,7 @@ const StreamSelectionChatbot = () => {
                           <Bot className="w-6 h-6" />
                         )}
                       </motion.div>
-                      <motion.div 
+                      <motion.div
                         className={`rounded-3xl p-4 shadow-lg backdrop-blur-sm border ${
                           message.sender === 'user'
                             ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white ml-16 border-blue-200'
@@ -557,9 +528,9 @@ const StreamSelectionChatbot = () => {
                   </motion.div>
                 ))}
               </AnimatePresence>
-              
+
               {isTyping && (
-                <motion.div 
+                <motion.div
                   className="flex gap-4 justify-start"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -572,17 +543,17 @@ const StreamSelectionChatbot = () => {
                     <div className="bg-card/80 backdrop-blur-sm border border-border rounded-3xl p-4 mr-16 shadow-lg">
                       <div className="flex items-center gap-2">
                         <div className="flex gap-1">
-                          <motion.div 
+                          <motion.div
                             className="w-2 h-2 bg-purple-400 rounded-full"
                             animate={{ y: [0, -8, 0] }}
                             transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
                           />
-                          <motion.div 
+                          <motion.div
                             className="w-2 h-2 bg-pink-400 rounded-full"
                             animate={{ y: [0, -8, 0] }}
                             transition={{ duration: 0.6, repeat: Infinity, delay: 0.1 }}
                           />
-                          <motion.div 
+                          <motion.div
                             className="w-2 h-2 bg-indigo-400 rounded-full"
                             animate={{ y: [0, -8, 0] }}
                             transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
@@ -607,7 +578,7 @@ const StreamSelectionChatbot = () => {
                   onChange={(e) => setCurrentInput(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Share your thoughts here... ✨"
-                  className="w-full resize-none border-2 border-border rounded-2xl p-4 pr-12 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-300 bg-input-background backdrop-blur-sm placeholder-muted-foreground"
+                  className="w-full resize-none border-2 border-border rounded-2xl p-4 pr-12 focus:outline-none focus:ring-4 focus:ring-purple-500/20 focus:border-purple-500 transition-all duration-300"
                   rows={2}
                   disabled={isTyping}
                 />
@@ -618,7 +589,7 @@ const StreamSelectionChatbot = () => {
               <motion.button
                 onClick={handleSendMessage}
                 disabled={!currentInput.trim() || isTyping}
-                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-2xl hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg"
+                className="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-4 rounded-2xl hover:from-purple-600 hover:to-pink-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -632,7 +603,7 @@ const StreamSelectionChatbot = () => {
               </p>
               <AnimatePresence>
                 {chatPhase === 'complete' && (
-                  <motion.div 
+                  <motion.div
                     className="flex items-center gap-1 text-xs text-green-600"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
