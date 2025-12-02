@@ -101,7 +101,14 @@ export function Footer() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <p>&copy; 2025 CareerCompass. All rights reserved. | Visit us at career-compas1.com</p>
+          <p>&copy; 2025 CareerCompass. All rights reserved. | Visit us at <a 
+                  href="https://career-compas1.netlify.app/" 
+                  className="text-primary hover:underline"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  career-compas1.com
+                </a></p>
         </motion.div>
       </div>
     </footer>
